@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>RDF</title>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="tetris.js"></script>
+	<script type="text/javascript" src="keypress.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+			tetris = new playTetris();
+			tetris.mainLoop();
+
+			$.get('top_score.txt', function(top_score){ $("#high_scores ul li").append("<span class='red'>"+top_score+"</span> by ") }, 'text');
+			$.get('top_player.txt', function(top_player) { $("#high_scores ul li").append(top_player) }, 'text');	
+
+			keypress.combo("left", function(event) {
+			   tetris.moveBlock(event.which);
+			});
+
+			keypress.combo("right", function(event) {
+			   tetris.moveBlock(event.which);
+			});
+
+			keypress.combo("up", function(event) {
+			   tetris.moveBlock(event.which);
+			});
+
+			keypress.combo("down", function(event) {
+			   tetris.moveBlock(event.which);
+			});
+
+			keypress.combo("space", function(event) {
+			   tetris.moveBlock(event.which);
+			});
+			
+			$(this).keyup(function(event){
+				if(event.keyCode === 40){
+					tetris.resetGameSpeed();
+				}
+				event.preventDefault();
+			});
+			// $(this).keydown(function(event){
+			// 	tetris.moveBlock(event.keyCode);
+			// 	event.preventDefault();
+			// });
+
+			// $(this).keypress(function(event){
+			// 	if(event.keyCode === 32){
+			// 		tetris.moveBlock(event.keyCode);
+			// 	}
+			// 	event.preventDefault();
+			// });
+			tetris_music =document.getElementById("tetris_music");
+			tetris_music.volume=0.4;
+		});
+	</script>
+</head>
+<body>
+	<h3 id="game_name">
+		<span style="color: #f85032;">T</span>
+		<span style="color: #cb60b3;">E</span>
+		<span style="color: #9dd53a;">T</span>
+		<span style="color: #F9E103;">R</span>
+		<span style="color: #50AFE5;">j</span>
+		<span style="color: #ffb76b;">S</span>
+	</h3>
+	<div id="tetrisContainer"></div>
+	<div id="score">0</div>
+	<div id="next_block_shape">
+		<div id="next_shape"></div>
+		<div id="box_label">Next Shape</span></div>
+	</div>
+	<p id="guide">Use arrow keys and space bar <br> (one key at a time)</p>
+	<div id="high_scores">
+		<h3>Highest Score</h3>
+		<ul><li></li></ul>
+	</div>
+	<audio autoplay loop id="tetris_music">
+		<source src="tetris.mp3" type="audio/mpeg">
+	</audio>
+	
+	<audio id="boom">
+		<source src="boom.mp3" type="audio/mpeg">
+	</audio>
+	
+	<audio id="drop">
+		<source src="drop.mp3" type="audio/mpeg">
+	</audio>
+
+	<audio id="rotate">
+		<source src="rotate.mp3" type="audio/mpeg">
+	</audio>
+</body>
+</html>
